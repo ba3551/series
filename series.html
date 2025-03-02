@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeriVerse - Ultimate Serie Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    :root {
+        --primary-color: #0a0a0a;
+        --secondary-color: #e50914;
+        --accent-color: #f5f5f5;
+        --card-bg: #1f1f1f;
+        --gradient: linear-gradient(135deg, #e50914 0%, #b81d24 100%);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Resets and general styles */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--primary-color);
+        color: var(--accent-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header Styles */
+    .header {
+        background: rgba(0, 0, 0, 0.95);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        padding: 1rem 2rem;
+    }
+
+    .header.hidden {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+        color: #ff333d;
+    }
+    
+
+    /* Main Content Styles */
+    .container {
+        flex: 1;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+        border-bottom: 4px solid #FF0004;
+    }
+    img {
+    	border-bottom: 4px solid #FF0004;
+    }
+    /* Series Grid Styles */
+    .series-grid,
+    .search-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        width: 100%;
+    }
+
+    /* Card Styles */
+    .episode-card,
+    .anime-card-search {
+        background: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        width:auto;
+    }
+
+    .series-card {
+        background: var(--card-bg);
+        width: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 0.3s ease;
+        position: relative;
+        cursor: pointer;
+        border-bottom: 4px solid #FF0004;
+    }
+
+    .series-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .poster-container {
+        position: relative;
+        aspect-ratio: 2/3;
+    }
+
+    .series-poster {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .series-info {
+        padding: 1.2rem;
+    }
+
+    .series-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        color: var(--accent-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .series-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #bbb;
+        font-size: 0.9rem;
+    }
+
+    /* Episodes Section */
+    .episodes-container {
+        display: none;
+        margin: 2rem auto;
+        max-width: 1200px;
+        padding: 0 1rem;
+    }
+
+    .season-section {
+        margin-bottom: 2rem;
+        background: rgba(31, 31, 31, 0.8);
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .season-section h3 {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 0.5rem;
+    }
+
+    .episode-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+    }
+
+    .episode-card {
+        padding: 1rem;
+        text-align: center;
+        border-radius: 10px;
+        background: #333;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .episode-card:hover {
+        background: var(--secondary-color);
+        transform: translateY(-3px);
+    }
+
+    /* Video Section */
+    #videoSection {
+        display: none;
+        max-width: 1000px;
+        margin: 2rem auto;
+    }
+
+    .video-player {
+        border-radius: 15px;
+        overflow: hidden;
+        background: #000;
+        aspect-ratio: 16/9;
+    }
+
+    .video-player video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Buttons */
+    button {
+        background: var(--gradient);
+        border: none;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #ff333d 0%, #d12732 100%);
+        transform: scale(1.05);
+    }
+
+    .back-button {
+        margin-bottom: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Utilities */
+    .hidden {
+        display: none !important;
+    }
+
+    .active-section {
+        display: block;
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Search Section */
+    .search-section {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #444;
+        border-radius: 30px;
+        background: #222;
+        color: var(--accent-color);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: var(--secondary-color);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .series-grid,
+        .search-results {
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .nav-container {
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+        }
+
+        .container {
+            padding: 1rem;
+        }
+
+        .episode-list {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+    }
+
+    @media (max-width: 480px) {
+        .series-grid,
+        .search-results {
+            grid-template-columns: 1fr;
+        }
+
+        .episode-list {
+            grid-template-columns: repeat(3, 1fr);
+            }
+        
+    }
+    
+</style>
+</head>
+
+<body>
+    <div id="appy">
+        <header class="header">
+            <nav class="nav-container">
+                <a href="series.html" class="logo">SERIESVERSE</a>
+                
+            </nav>
+        </header>
+    </div>
+
+    <main class="container">
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search Series..." id="animeName"
+                    autocomplete="off">
+            </div>
+        </div>
+
+        <div id="mainSeries" class="series-grid active-section"></div>
+        <div id="searchResults" class="search-results hidden"></div>
+        <div id="result" class="hidden"></div>
+        <div id="episodesSection" class="episodes-container hidden"></div>
+
+        <div id="videoSection" class="hidden">
+            <button class="back-button" onclick="showEpisodes()">← Back to Episodes</button>
+            <div class="video-player">
+                <video id="videoElement" controls>
+                    <source id="videoSource" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <center>
+            <div>
+                <p id="cop">copyright © b_4qr 2025</p>
+            </div><br>
+        </center>
+    </main>
+
+    <script>
+    	
+        let currentEpisodes = [];
+        let currentPage = 1;
+        const episodesPerPage = 50;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSeries();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Search input typing
+            document.getElementById('animeName').addEventListener('input', (e) => {
+                if (e.target.value.length > 2) searchByName();
+            });
+
+            // Hide header on scroll
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                const header = document.querySelector('.header');
+
+                if (currentScroll > lastScroll && currentScroll > 100) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+                lastScroll = currentScroll;
+            });
+        }
+
+        function showSection(sectionId) {
+            const sections = ['mainSeries', 'searchResults', 'result', 'episodesSection', 'videoSection'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === sectionId) {
+                    el.classList.remove('hidden');
+                    el.classList.add('active-section');
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('active-section');
+                }
+            });
+        }
+
+        async function fetchSeries() {
+            try {
+                const response = await fetch(
+                    "https://cee.buzz/api/android/videoListPagination/groupID/320/level/0/itemsPerPage/12/page/0");
+                const data = await response.json();
+                displaySeries(data);
+            } catch (error) {
+                console.error('Error fetching series:', error);
+            }
+        }
+
+        function displaySeries(series) {
+            const container = document.getElementById('mainSeries');
+            //console.log(series)
+            container.innerHTML = series.map(item => `
+                <div class="series-card" onclick="showAnimeDetails(${item.nb})">
+                    <div class="poster-container">
+                        <img src="${item.imgObjUrl}" 
+                             class="series-poster" 
+                             alt="${item.ar_title}"
+                             loading="lazy">
+                        <div class="series-info">
+                            <h3 class="series-title">${item.ar_title}</h3>
+                            <div class="series-meta">
+                                <span>${item.mDate}</span>
+                                <span>★ ${item.stars}</span>
+                                
+                            </div><center><br>
+                                	<span>${item.custom_ar_title}</span>
+                                </center>
+                        </div>
+                    </div>
+                </div><br><br>
+            `).join('');
+        }
+
+        async function searchByName() {
+            const searchTerm = document.getElementById('animeName').value;
+            if (searchTerm.length < 3) return;
+
+            showSection('searchResults');
+            try {
+                const response = await fetch(
+                    `https://cee.buzz/api/android/AdvancedSearch?videoTitle=${encodeURIComponent(searchTerm)}&type=series`
+                );
+                const data = await response.json();
+                displaySearchResults(data);
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        }
+
+        function displaySearchResults(results) {
+            const container = document.getElementById('searchResults');
+            container.innerHTML = results.map(anime => `
+                <div class="anime-card-search" onclick="showAnimeDetails(${anime.nb})">
+                    <div class="poster-container">
+                        <img src="${anime.imgObjUrl}"
+                             class="series-poster"
+                             alt="${anime.ar_title}"
+                             loading="lazy">
+                        <div class="series-info">
+                            <h3 class="series-title">${anime.ar_title}</h3>
+                            <div class="series-meta">
+                                <span>${anime.mDate}</span>
+                                <span>★ ${anime.stars}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
+            `).join('');
+        }
+
+        async function showAnimeDetails(nb) {
+            showSection('result');
+            try {
+                const response = await fetch(`https://cee.buzz/api/android/allVideoInfo/id/${nb}`);
+                const data = await response.json();
+                displayAnimeDetails(data);
+            } catch (error) {
+                console.error('Details error:', error);
+            }
+        }
+
+        function displayAnimeDetails(data) {
+            const container = document.getElementById('result');
+            //console.log(data)
+            container.innerHTML = `
+                <div class="series-card">
+                    <div class="poster-container">
+                        <img src="https://cnth2.cee.buzz/vascin-poster-images/${data.img}"
+                             class="series-poster"
+                             alt="${data.ar_title}"
+                             loading="lazy">
+                        <div class="series-info">
+                            <h3 class="series-title">${data.ar_title}</h3><span>${data.mDate}</span>
+                            <div class="series-meta">
+                                <span>${data.Likes} 👍🏻 </span>
+                                <span>${data.DisLikes} 👎🏻</span>
+                            </div><center>
+                            	<span>${data.ar_content}</span>
+                            	</center>
+                            <br>
+                            <button onclick="showEpisodes(${data.nb})">Show Episodes</button><br>
+                        </div>
+                    </div>
+                </div><br><br>
+            `;
+        }
+
+        async function showEpisodes(nb) {
+            showSection('episodesSection');
+            try {
+                const response = await fetch(`https://cee.buzz/api/android/videoSeason/id/${nb}`);
+                
+                const data = await response.json();
+                currentEpisodes = organizeEpisodes(data);
+                //console.log(currentEpisodes)
+                renderEpisodes();
+            } catch (error) {
+                console.error('Episodes error:', error);
+            }
+        }
+
+        function organizeEpisodes(episodes) {
+            return episodes.reduce((acc, ep) => {
+                if (!acc[ep.season]) {
+                    acc[ep.season] = [];
+                }
+                acc[ep.season].push(ep);
+                return acc;
+            }, {});
+        }
+
+        function renderEpisodes() {
+            const container = document.getElementById('episodesSection');
+            //console.log(currentEpisodes)
+            container.innerHTML = Object.entries(currentEpisodes).map(([season, episodes]) => `
+                <div class="season-section">
+                    <h3>Season ${season}</h3>
+                    <div class="episode-list">
+                        ${episodes.map(ep => `
+                            <div class="episode-card" onclick="playEpisode(${ep.nb})">
+                                Episode ${ep.episodeNummer}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            //console.log(ep)
+        }
+
+        async function playEpisode(nb) {
+           
+            //document.getElementById('season-section').style.display="none";
+            try {
+                const response = await fetch(`https://cee.buzz/api/android/transcoddedFiles/id/${nb}`);
+                const data = await response.json();
+                //console.log(data[2])
+                document.getElementById('videoSection').style.display="block";
+                if (data[2]?.videoUrl) {
+                    const videoSource = document.getElementById('videoSource');
+                    const videoElement = document.getElementById('videoElement');
+                    videoSource.src = data[2].videoUrl;
+                    videoElement.load();
+                    videoElement.play(); // Auto-play the video
+                } else {
+                    console.error('Video URL not found');
+                    // Optionally, display a message to the user
+                }
+            } catch (error) {
+                console.error('Play error:', error);
+            }
+        }
+        (function() {
+        const checkDebugger = () => {
+            if (typeof window.debuggerCheck !== 'undefined') {
+                window.location.reload();
+            }
+        };
+        setInterval(checkDebugger, 1000);
+    })();
+    </script>
+</body>
+
+</html>
