@@ -6,383 +6,530 @@
     <title>SerieVerse - Ultimate Serie Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #0a0a0a;
-            --secondary-color: #E56909;
-            --accent-color: #f5f5f5;
-            --card-bg: #1f1f1f;
-            --search-height: 56px;
-            --gradient: linear-gradient(E56909, #E56909 0%, #A44B06 100%);
-        }
+    
+    	<style>
+    	
+/* أنماط عامة للتصنيفات */
+            
+:root {
+    --primary-color: #0a0a0a;
+    --secondary-color: #E56909;
+    --accent-color: #f5f5f5;
+    --card-bg: #1f1f1f;
+    --search-height: 56px;
+    --gradient: linear-gradient(E56909, #E56909 0%, #A44B06 100%);
+}
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-color);
-            color: var(--accent-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--accent-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(45deg, #DD06FF, #E53133);
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #333;
-            color: white;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-        }
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--secondary-color);
-        }
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff8906, #e53170);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
 
-        .hamburger .bar {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            transition: 0.3s ease;
-        }
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: 0.3s ease;
+}
 
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 
-        .nav-links a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
 
-        .nav-links a:hover {
-            color: #ff6347;
-        }
+.nav-links a:hover {
+    color: #ff6347;
+}
 
-        .nav-links.active {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            top: 60px;
-            left: 20px;
-            background-color: #4D4D4D;
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
+.nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    background-color: #4D4D4D;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
 
-        .search-section {
-            margin: 3rem auto 2rem;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-        }
+.search-section {
+    margin: 3rem auto 2rem;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+}
 
-        .search-container {
-            position: relative;
-            display: flex;
-            gap: 1rem;
-        }
+.search-container {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+}
 
-        .search-input {
-            width: 100%;
-            padding: 1.2rem 5rem 1.2rem 2.5rem;
-            border-radius: 50px;
-            border: none;
-            background: var(--card-bg);
-            color: var(--accent-color);
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+.search-input {
+    width: 100%;
+    padding: 1.2rem 5rem 1.2rem 2.5rem;
+    border-radius: 50px;
+    border: none;
+    background: var(--card-bg);
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-        .search-input:focus {
-            outline: 2px solid var(--secondary-color);
-            box-shadow: 0 6px 20px rgba(29, 9, 229, 0.3);
-        }
+.search-input:focus {
+    outline: 2px solid var(--secondary-color);
+    box-shadow: 0 6px 20px rgba(29, 9, 229, 0.3);
+}
 
-        .search-btn {
-            position: absolute;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--gradient);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+.search-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--gradient);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
-        .search-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
+.search-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+}
 
-        .search-btn i {
-            color: white;
-            font-size: 1.2rem;
-        }
+.search-btn i {
+    color: white;
+    font-size: 1.2rem;
+}
 
-        .serie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2.5rem;
-            padding: 2rem 5%;
-            flex-grow: 1;
-        }
+.serie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 5%;
+    flex-grow: 1;
+}
 
-        .serie-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: visible;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.3s ease;
-            position: relative;
-            cursor: pointer;
-        }
+.serie-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: visible;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+.serie-card img {
+	height: auto;
+}
+.serie-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
 
-        .serie-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-        }
+.serie-poster {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--secondary-color);
+    background: #131313;
+    display: block;
+}
 
-        .serie-poster {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-bottom: 4px solid var(--secondary-color);
-            background: #131313;
-            display: block;
-        }
+.serie-info {
+    padding: 1.5rem;
+    position: relative;
+}
 
-        .serie-info {
-            padding: 1.5rem;
-            position: relative;
-        }
+.serie-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
-        .serie-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+.rating-badge {
+    position: absolute;
+    top: -20px;
+    right: 15px;
+    background: var(--secondary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
-        .rating-badge {
-            position: absolute;
-            top: -20px;
-            right: 15px;
-            background: var(--secondary-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.98);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(12px);
+}
 
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(12px);
-        }
+.video-player {
+    width: 90%;
+    max-width: 1200px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+}
 
-        .video-player {
-            width: 90%;
-            max-width: 1200px;
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            aspect-ratio: 16/9;
-        }
+#videoElement {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        #videoElement {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.video-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 3000;
+}
 
-        .video-controls {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            z-index: 3000;
-        }
+.download-btn,
+.close-btn {
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+}
 
-        .download-btn,
-        .close-btn {
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background: none;
-            border: none;
-            padding: 0;
-        }
+.loader {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 5px solid #fff;
+    border-bottom-color: var(--secondary-color);
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+    margin: 2rem auto;
+}
 
-        .loader {
-            display: none;
-            width: 48px;
-            height: 48px;
-            border: 5px solid #fff;
-            border-bottom-color: var(--secondary-color);
-            border-radius: 50%;
-            animation: rotation 1s linear infinite;
-            margin: 2rem auto;
-        }
+/* أنماط جديدة للحلقات */
+#episodes-container {
+    padding: 2rem 5%;
+}
 
-        /* أنماط جديدة للحلقات */
-        #episodes-container {
-            padding: 2rem 5%;
-        }
+.season-section {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+}
 
-        .season-section {
-            margin: 2rem 0;
-            padding: 1rem;
-            background: var(--card-bg);
-            border-radius: 8px;
-        }
+.season-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
 
-        .season-section h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-        }
+.episode-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
 
-        .episode-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-        }
+.episode-card {
+    padding: 1rem;
+    text-align: center;
+    background: #2a2a2a;
+    border-radius: 8px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
 
-        .episode-card {
-            padding: 1rem;
-            text-align: center;
-            background: #2a2a2a;
-            border-radius: 8px;
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
+.episode-card:hover {
+    transform: translateY(-3px);
+    background: var(--secondary-color);
+}
 
-        .episode-card:hover {
-            transform: translateY(-3px);
-            background: var(--secondary-color);
-        }
+.episode-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #ddd;
+}
 
-        .episode-title {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: #ddd;
-        }
+.episode-number {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
 
-        .episode-number {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+@media (max-width: 768px) {
+    .serie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
 
-        @media (max-width: 768px) {
-            .serie-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 1.5rem;
-                padding: 1.5rem;
-            }
+    .serie-poster {
+        height: 320px;
+    }
 
-            .serie-poster {
-                height: 320px;
-            }
+    .search-input {
+        padding: 1rem 4rem 1rem 1.5rem;
+        font-size: 1rem;
+    }
 
-            .search-input {
-                padding: 1rem 4rem 1rem 1.5rem;
-                font-size: 1rem;
-            }
+    .hamburger {
+        display: flex;
+    }
 
-            .hamburger {
-                display: flex;
-            }
+    .nav-links {
+        display: none;
+    }
 
-            .nav-links {
-                display: none;
-            }
+    .nav-links.active {
+        display: flex;
+    }
 
-            .nav-links.active {
-                display: flex;
-            }
+    .episode-list {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+.main-btn {        	
+    background: var(--secondary-color);
+    color: white;
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    height: 45px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+#categoryBtn {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 8px;
+}
 
-            .episode-list {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-        }
-        .main-btn{        	
-            background: var(--secondary-color);
-            color: white;
-            border: 1px solid #FFFFFF;
-            border-radius: 20px;
-            height: 45px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-    </style>
+#categoryBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #2a2a2a;
+    min-width: 250px;
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    right: 0;
+    top: 100%;
+    z-index: 1000;
+}
+
+/* أنماط الهواتف المحمولة */
+@media (max-width: 768px) {
+    #categoryBtn {
+        font-size: 0.9rem;
+    }
+
+    .dropdown-content {
+        position: fixed;       
+        width: 40%;
+        max-height: calc(100vh - 60px);
+        top: 40px;
+        bottom:5px;
+        left: 0;
+        right: auto;
+        border-radius: 10px;
+        box-shadow: none;
+        border-top: 1px solid #444;
+    }
+
+    .category-item {
+        padding: 15px 20px;
+        font-size: 0.95rem;
+    }
+
+    .dropdown-content.show {
+        animation: mobileSlideUp 0.3s ease;
+    }
+
+    @keyframes mobileSlideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+        margin: 15px 0;
+        padding: 0 10px 10px 10px;
+    }
+
+    
+}
+
+/* أنماط الأجهزة الصغيرة جدًا (أقل من 480px) */
+@media (max-width: 480px) {
+    .dropdown-content {
+        max-height: calc(100vh - 50px);
+        top: 40px;
+    }
+
+    .category-item {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    .category-count {
+        font-size: 0.8rem;
+    }
+
+    
+}
+
+/* الأنماط المشتركة */
+.dropdown-content.show {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.category-item:hover {
+    background: #3a3a3a;
+}
+
+.category-count {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.category-title {
+    color: #fff;
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #444;
+}
+
+.category-loading,
+.category-error {
+    padding: 15px;
+    text-align: center;
+    color: #888;
+}
+</style>
 </head>
 <body>
     <div id="appy">
         <header class="header">
-            <a href="#" class="logo">SERIES VERSE</a>
-            <button class="hamburger" aria-label="Toggle navigation">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <nav class="nav-links">
-                <a href="https://www.instagram.com/b_4qr">My Instagram</a>
-                <a href="https://t.me/b_4qr">My Telegram</a>
-            </nav>
-        </header>
+    <a href="#" class="logo">SERIES VERSE</a>
+    <button class="hamburger" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+    <nav class="nav-links">
+    <div class="categories" id="categories">
+        <button class="dropbtn" id="categoryBtn">التصنيفات ▼</button>
+        <div class="dropdown-content" id="categoryDropdown"></div>
+    </div>
+    <a href="https://www.instagram.com/b_4qr">My Instagram</a>
+    <a href="https://t.me/b_4qr">My Telegram</a>
+</nav>
+</header>
     </div>
 
     <main class="container" id="container">
@@ -418,18 +565,30 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
+                
                 <video id="videoElement" controls playsinline controlsList="nodownload"></video>
             </div>
         </div>
-    </main>
+        <center>
+            <div>
+                <p id="cop">copyright © SerieVerse <br>2025</p>
+            </div><br>
+        </center>
+    </main> 
 
     <script>
-    	const hamburger = document.querySelector('.hamburger');
+        const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
+        
+        navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
         class SerieVerse {
             constructor() {
                 this.baseAPI = "https://cee.buzz/api/android";
@@ -463,7 +622,6 @@
                     this.filteredSeries = this.serieData;
                     this.renderSeries();
                 } catch (error) {
-                    //this.loadMainData()
                     this.showError('فشل تحميل البيانات');
                 } finally {
                     this.hideLoader();
@@ -507,7 +665,6 @@
                 } catch (error) {
                     console.error('Error loading episodes:', error);
                     alert('حدث خطأ في تحميل الحلقات');
-                    loadEpisodes();
                 } finally {
                     this.hideLoader();
                 }
@@ -579,7 +736,7 @@
                                              || videoData[0];
                             
                             if (bestQuality) {
-                                this.playVideo(bestQuality.videoUrl);
+                                this.playVideo(bestQuality.videoUrl, ep.dataset.nb);
                             }
                         } catch (error) {
                             console.error('Error loading video:', error);
@@ -589,17 +746,105 @@
                 });
             }
 
-            playVideo(url) {
+            async fetchTranslationFile(videoID) {
+                try {
+                    const videoTran = await fetch(`${this.baseAPI}/translationFiles/id/${videoID}`);
+                    const videoData = await videoTran.json();
+                    
+                    // استخراج رابط الترجمة
+                    let translationUrl = '';
+                    if (videoData.arTranslationFilePath && videoData.arTranslationFilePath.includes('.srt')) {
+                        translationUrl = videoData.arTranslationFilePath;
+                    } else if (videoData.translations && videoData.translations.length > 0) {
+                        // البحث عن أول ترجمة عربية بصيغة .srt أو .vtt
+                        const arabicTranslation = videoData.translations.find(trans => 
+                            trans.type === 'ar' && (trans.extention === 'srt' || trans.extention === 'vtt')
+                        );
+                        if (arabicTranslation) {
+                            translationUrl = arabicTranslation.file;
+                        }
+                    }
+
+                    if (translationUrl) {
+                        const srtContent = await fetch(translationUrl).then(res => res.text());
+                        const subtitles = this.parseSRT(srtContent);
+                        this.displaySubtitles(subtitles);
+                    } else {
+                        console.warn('لم يتم العثور على ملف ترجمة عربي.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching translation file:', error);
+                }
+            }
+
+            parseSRT(srtContent) {
+                const subtitles = [];
+                const lines = srtContent.split('\n');
+                let currentSubtitle = null;
+
+                lines.forEach(line => {
+                    if (line.match(/^\d+$/)) {
+                        if (currentSubtitle) subtitles.push(currentSubtitle);
+                        currentSubtitle = { id: parseInt(line), text: '', startTime: 0, endTime: 0 };
+                    } else if (line.match(/^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$/)) {
+                        const [startTime, endTime] = line.split(' --> ');
+                        currentSubtitle.startTime = this.parseTime(startTime);
+                        currentSubtitle.endTime = this.parseTime(endTime);
+                    } else if (line.trim()) {
+                        currentSubtitle.text += line.trim() + '\n';
+                    }
+                });
+
+                if (currentSubtitle) subtitles.push(currentSubtitle);
+                return subtitles;
+            }
+
+            parseTime(timeString) {
+                const [hms, ms] = timeString.split(',');
+                const [hours, minutes, seconds] = hms.split(':');
+                return (parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)) * 1000 + parseInt(ms);
+            }
+
+            displaySubtitles(subtitles) {
+    const video = document.getElementById('videoElement');
+    const subtitleContainer = document.createElement('div');
+    subtitleContainer.id = 'subtitle-container';
+    subtitleContainer.style.position = 'absolute';
+    subtitleContainer.style.bottom = '10%';
+    subtitleContainer.style.left = '50%';
+    subtitleContainer.style.transform = 'translateX(-50%)';
+    subtitleContainer.style.color = '#fff';
+    subtitleContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    subtitleContainer.style.padding = '0px 0px'; 
+    //subtitleContainer.style.borderRadius = '10px';
+    subtitleContainer.style.textAlign = 'center';
+    subtitleContainer.style.zIndex = '1000';
+    subtitleContainer.style.fontSize = '10px';
+    subtitleContainer.style.width = 'auto'; 
+    subtitleContainer.style.maxWidth = '80%'; 
+    //subtitleContainer.style.border = '1px solid #000000'; 
+    //subtitleContainer.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.5)'; 
+    document.querySelector('.video-player').appendChild(subtitleContainer);
+
+    video.addEventListener('timeupdate', () => {
+        const currentTime = video.currentTime * 1000;
+        const currentSubtitle = subtitles.find(sub => currentTime >= sub.startTime && currentTime <= sub.endTime);
+        subtitleContainer.textContent = currentSubtitle ? currentSubtitle.text.trim() : '';
+    });
+}
+
+            playVideo(url, videoID) {
                 const video = document.getElementById('videoElement');
                 const overlay = document.getElementById('videoOverlay');
                 video.src = url;
                 overlay.style.display = 'flex';
                 video.play();
+                this.fetchTranslationFile(videoID);
             }
 
             setupEventListeners() {
                 document.getElementById('search-input').addEventListener('input', (e) => {
-                                        this.searchTerm = e.target.value;
+                    this.searchTerm = e.target.value;
                     if (this.searchTerm.length > 2) {
                         this.searchSeries(this.searchTerm);
                     } else {
@@ -646,14 +891,172 @@
         document.addEventListener('DOMContentLoaded', () => {
             window.app = new SerieVerse();
         });
-        (function() {
-        const checkDebugger = () => {
-            if (typeof window.debuggerCheck !== 'undefined') {
-                window.location.reload();
+        
+        
+        
+        
+        //#################
+        
+        
+        class CategoriesHandler {
+    constructor() {
+        this.baseAPI = "https://cee.buzz/api/android";
+        this.dropdown = document.getElementById('categoryDropdown');
+        this.categoryBtn = document.getElementById('categoryBtn');
+        this.isOpen = false;
+        this.init();
+    }
+
+    init() {
+        // إعداد الأحداث
+        this.categoryBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleDropdown();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!this.dropdown.contains(e.target) && !this.categoryBtn.contains(e.target)) {
+                this.closeDropdown();
             }
-        };
-        setInterval(checkDebugger, 1000);
-    })();
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) this.closeDropdown();
+        });
+
+        this.loadCategories();
+    }
+
+    async loadCategories() {
+        try {
+            const loader = document.createElement('div');
+            loader.className = 'category-loading';
+            loader.textContent = 'جاري التحميل...';
+            this.dropdown.appendChild(loader);
+
+            const response = await fetch(`${this.baseAPI}/categoryLangFreqVideo`);
+            const categories = await response.json();
+            
+            this.dropdown.removeChild(loader);
+            this.renderCategories(categories);
+        } catch (error) {
+            console.error('فشل تحميل التصنيفات:', error);
+            this.showError('فشل تحميل التصنيفات');
+        }
+    }
+
+    renderCategories(categories) {
+        this.dropdown.innerHTML = ''; // مسح المحتوى القديم
+        
+        categories.forEach(category => {
+            const categoryItem = document.createElement('a');
+            categoryItem.href = '#';
+            categoryItem.className = 'category-item';
+            categoryItem.innerHTML = `
+                ${category.ar_title}
+            `;
+            
+            categoryItem.addEventListener('click', async (e) => {
+                e.preventDefault();
+                this.handleCategorySelection(category.nb, category.ar_title);
+                this.closeDropdown();
+            });
+
+            this.dropdown.appendChild(categoryItem);
+        });
+    }
+
+    async handleCategorySelection(categoryId, categoryName) {
+        try {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+
+            const params = new URLSearchParams({
+                categoryID: categoryId,
+                orderby: 'desc',
+                videoKind: '2',
+                offset: '0',
+                level: '0'
+            });
+            navLinks.classList.remove('active');
+
+            const response = await fetch(`${this.baseAPI}/videosByCategory?${params}`);
+            const data = await response.json();
+            
+            if (data.info && data.info.length > 0) {
+                this.displayCategoryResults(data.info, categoryName);
+            } else {
+                this.showError('لا توجد نتائج لهذا التصنيف');
+            }
+        } catch (error) {
+            console.error('خطأ في جلب البيانات:', error);
+            this.showError('فشل تحميل البيانات');
+        } finally {
+            document.getElementById('loader').style.display = 'none';
+        }
+    }
+
+    displayCategoryResults(results, categoryName) {
+        const container = document.getElementById('serie-container');
+        const pagination = document.getElementById('pagination');
+        
+        // تحديث العنوان
+        document.querySelector('.search-section').insertAdjacentHTML('beforebegin', 
+            `<h2 class="category-title">التصنيف: ${categoryName}</h2>`
+        );
+
+        // عرض النتائج
+        container.innerHTML = results.map(item => `
+            <div class="serie-card" data-id="${item.nb}">
+                <div class="rating-badge">★ ${item.stars}</div>
+                <img src="${item.imgObjUrl}" class="serie-poster" alt="${item.ar_title}">
+                <div class="serie-info">
+                    <h3 class="serie-title">${item.ar_title}</h3>
+                    <div class="serie-meta">
+                        <span>${item.mDate}</span>
+                        </div>
+                        <div class="serie-meta">
+                        <span>${categoryName}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // إخفاء الترقيم
+        pagination.style.display = 'none';
+        
+        // إضافة أحداث النقر على البطاقات
+        document.querySelectorAll('.serie-card').forEach(card => {
+            card.addEventListener('click', () => window.app.loadEpisodes(card.dataset.id));
+        });
+    }
+
+    toggleDropdown() {
+        this.isOpen = !this.isOpen;
+        this.dropdown.classList.toggle('show', this.isOpen);
+        this.categoryBtn.innerHTML = this.isOpen ? 
+            'التصنيفات ▲' : 
+            'التصنيفات ▼';
+    }
+
+    closeDropdown() {
+        this.isOpen = false;
+        this.dropdown.classList.remove('show');
+        this.categoryBtn.innerHTML = 'التصنيفات ▼';
+    }
+
+    showError(message) {
+        const errorEl = document.createElement('div');
+        errorEl.className = 'category-error';
+        errorEl.textContent = message;
+        this.dropdown.appendChild(errorEl);
+    }
+}
+
+// التهيئة بعد تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    const categoriesHandler = new CategoriesHandler();
+});
     </script>
 </body>
-</html>
+    </html>
