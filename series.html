@@ -6,18 +6,16 @@
     <title>SerieVerse - Ultimate Serie Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    	<style>
+    <style>
     	
-/* أنماط عامة للتصنيفات */
-            
 :root {
-    --primary-color: #0a0a0a;
-    --secondary-color: #E56909;
+    --primary-color: #342B27;
+    --secondary-color: #B73C31;
     --accent-color: #f5f5f5;
-    --card-bg: #1f1f1f;
+    --card-bg: #342B27;
     --search-height: 56px;
-    --gradient: linear-gradient(E56909, #E56909 0%, #A44B06 100%);
+    --gradient: linear-gradient(45deg, #B73C31, #7C2522);
+    --dark-color: #7C2522;
 }
 
 *,
@@ -35,7 +33,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(45deg, #DD06FF, #E53133);
+    background: linear-gradient(45deg, #7C2522, #B73C31);
 }
 
 .header {
@@ -43,7 +41,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #333;
+    background-color: var(--primary-color);
     color: white;
     position: sticky;
     top: 0;
@@ -55,7 +53,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
-    background: linear-gradient(45deg, #ff8906, #e53170);
+    background: linear-gradient(45deg, #B73C31, #7C2522);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -90,7 +88,7 @@ body {
 }
 
 .nav-links a:hover {
-    color: #ff6347;
+    color: var(--secondary-color);
 }
 
 .nav-links.active {
@@ -99,7 +97,7 @@ body {
     position: absolute;
     top: 60px;
     left: 20px;
-    background-color: #4D4D4D;
+    background-color: var(--primary-color);
     padding: 10px;
     border-radius: 5px;
     z-index: 1000;
@@ -132,7 +130,7 @@ body {
 
 .search-input:focus {
     outline: 2px solid var(--secondary-color);
-    box-shadow: 0 6px 20px rgba(29, 9, 229, 0.3);
+    box-shadow: 0 6px 20px rgba(183, 60, 49, 0.3);
 }
 
 .search-btn {
@@ -161,26 +159,26 @@ body {
     font-size: 1.2rem;
 }
 
+/* تعديل شبكة المسلسلات للواجهة الرئيسية */
 .serie-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
     padding: 2rem 5%;
     flex-grow: 1;
 }
 
 .serie-card {
     background: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: visible;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.3s ease;
     position: relative;
     cursor: pointer;
+    height: 100%;
 }
-.serie-card img {
-	height: auto;
-}
+
 .serie-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
@@ -188,21 +186,21 @@ body {
 
 .serie-poster {
     width: 100%;
-    height: 400px;
+    height: 250px;
     object-fit: cover;
-    border-bottom: 4px solid var(--secondary-color);
+    border-bottom: 3px solid var(--secondary-color);
     background: #131313;
     display: block;
 }
 
 .serie-info {
-    padding: 1.5rem;
+    padding: 1rem;
     position: relative;
 }
 
 .serie-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -211,15 +209,69 @@ body {
 
 .rating-badge {
     position: absolute;
-    top: -20px;
-    right: 15px;
+    top: -15px;
+    right: 10px;
     background: var(--secondary-color);
     color: white;
-    padding: 6px 12px;
+    padding: 4px 10px;
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* تعديل عرض نتائج البحث بشكل أفقي */
+.search-result-card {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.search-result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.search-result-poster {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    border-right: 3px solid var(--secondary-color);
+}
+
+.search-result-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.search-result-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.search-result-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-rating {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .video-overlay {
@@ -335,15 +387,195 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+/* تعديل القسم الأفقي للمسلسلات */
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 1rem 0;
+    margin: 1.5rem 0;
+}
+
+.horizontal-section {
+    display: inline-flex;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.horizontal-section .serie-card {
+    flex: 0 0 200px;
+    white-space: normal;
+}
+
+.horizontal-section .serie-poster {
+    height: 200px;
+}
+
+.section-title {
+    color: #fff;
+    padding: 0 1rem;
+    margin: 1rem 0;
+    font-size: 1.2em;
+}
+
+.main-btn {        	
+    background: var(--secondary-color);
+    color: white;
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    height: 45px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* أنماط عامة للتصنيفات */
+#categoryBtn {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 8px;
+}
+
+#categoryBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: var(--primary-color);
+    min-width: 250px;
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    right: 0;
+    top: 100%;
+    z-index: 1000;
+}
+
+/* تعديل عرض التصنيفات */
+.category-result-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 5%;
+}
+
+.category-title {
+    color: #fff;
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+/* تحسين موضع الترجمة للعرض الأفقي */
+#subtitle-container {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 16px;
+    text-align: center;
+    z-index: 1000;
+    font-size: 16px;
+    width: auto;
+    max-width: 80%;
+    border-radius: 4px;
+}
+
+/* أنماط بطاقة تفاصيل المسلسل */
+#serie-details-container {
+    display: none;
+    padding: 2rem 5%;
+}
+
+.serie-details-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 2rem;
+}
+
+.serie-details-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.serie-details-poster {
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-left: 3px solid var(--secondary-color);
+}
+.serie-details-poster {
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.serie-details-info {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.serie-details-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+}
+
+.serie-details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.serie-details-rating {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.serie-details-type {
+    display: inline-block;
+    background: #444;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+.serie-details-description {
+    margin-top: 1rem;
+    line-height: 1.7;
+    color: #ddd;
+}
+
+/* أنماط الهواتف المحمولة */
 @media (max-width: 768px) {
     .serie-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
         padding: 1.5rem;
     }
 
     .serie-poster {
-        height: 320px;
+        height: 200px;
     }
 
     .search-input {
@@ -366,46 +598,24 @@ body {
     .episode-list {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
-}
-.main-btn {        	
-    background: var(--secondary-color);
-    color: white;
-    border: 1px solid #FFFFFF;
-    border-radius: 20px;
-    height: 45px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    .search-result-poster {
+        width: 100px;
+        height: 150px;
     }
-#categoryBtn {
-    background: none;
-    border: none;
-    color: #fff;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-radius: 8px;
-}
 
-#categoryBtn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
+    .search-result-title {
+        font-size: 1rem;
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background: #2a2a2a;
-    min-width: 250px;
-    max-height: 70vh;
-    overflow-y: auto;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-    right: 0;
-    top: 100%;
-    z-index: 1000;
-}
+    .horizontal-section .serie-card {
+        flex: 0 0 160px;
+    }
 
-/* أنماط الهواتف المحمولة */
-@media (max-width: 768px) {
+    .horizontal-section .serie-poster {
+        height: 180px;
+    }
+
     #categoryBtn {
         font-size: 0.9rem;
     }
@@ -415,7 +625,7 @@ body {
         width: 40%;
         max-height: calc(100vh - 60px);
         top: 40px;
-        bottom:5px;
+        bottom: 5px;
         left: 0;
         right: auto;
         border-radius: 10px;
@@ -443,7 +653,26 @@ body {
         padding: 0 10px 10px 10px;
     }
 
+    #subtitle-container {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
     
+    /* تعديلات بطاقة التفاصيل للجوال */
+    .serie-details-header {
+        flex-direction: column;
+    }
+    
+    .serie-details-poster {
+        width: 100%;
+        height: 300px;
+        border-left: none;
+        border-bottom: 3px solid var(--secondary-color);
+    }
+    
+    .serie-details-title {
+        font-size: 1.5rem;
+    }
 }
 
 /* أنماط الأجهزة الصغيرة جدًا (أقل من 480px) */
@@ -462,7 +691,29 @@ body {
         font-size: 0.8rem;
     }
 
+    .search-result-poster {
+        width: 80px;
+        height: 120px;
+    }
+
+    .search-result-info {
+        padding: 0.5rem;
+    }
+
+    .search-result-title {
+        font-size: 0.9rem;
+    }
+
+    #subtitle-container {
+        font-size: 12px;
+        padding: 4px 8px;
+        bottom: 8%;
+    }
     
+    .serie-details-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 
 /* الأنماط المشتركة */
@@ -488,20 +739,12 @@ body {
 }
 
 .category-item:hover {
-    background: #3a3a3a;
+    background: var(--secondary-color);
 }
 
 .category-count {
     font-size: 0.9em;
     color: #888;
-}
-
-.category-title {
-    color: #fff;
-    text-align: center;
-    margin: 20px 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #444;
 }
 
 .category-loading,
@@ -510,26 +753,26 @@ body {
     text-align: center;
     color: #888;
 }
-</style>
+    </style>
 </head>
 <body>
     <div id="appy">
         <header class="header">
-    <a href="#" class="logo">SERIES VERSE</a>
-    <button class="hamburger" aria-label="Toggle navigation">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </button>
-    <nav class="nav-links">
-    <div class="categories" id="categories">
-        <button class="dropbtn" id="categoryBtn">التصنيفات ▼</button>
-        <div class="dropdown-content" id="categoryDropdown"></div>
-    </div>
-    <a href="https://www.instagram.com/b_4qr">My Instagram</a>
-    <a href="https://t.me/b_4qr">My Telegram</a>
-</nav>
-</header>
+            <a href="#" class="logo">SERIES VERSE</a>
+            <button class="hamburger" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-links">
+                <div class="categories" id="categories">
+                    <button class="dropbtn" id="categoryBtn">التصنيفات ▼</button>
+                    <div class="dropdown-content" id="categoryDropdown"></div>
+                </div>
+                <a href="https://www.instagram.com/b_4qr">My Instagram</a>
+                <a href="https://t.me/b_4qr">My Telegram</a>
+            </nav>
+        </header>
     </div>
 
     <main class="container" id="container">
@@ -546,10 +789,42 @@ body {
                 </button>
             </div>
         </div>
+        <div id="seer">
+        <div class="horizontal-scroll" id="trending-section">
+            <h2 class="section-title" id ="section-title"></h2>
+            <div class="horizontal-section" id="serie-container2"></div>
+        </div>
+
+        <div class="horizontal-scroll" id="featured-section">
+            <h2 class="section-title" id ="section-title3"></h2>
+            <div class="horizontal-section" id="serie-container3"></div>
+        </div></div>
 
         <div class="loader" id="loader"></div>
         <div id="serie-container" class="serie-grid"></div>
         <div class="pagination" id="pagination"></div>
+        
+        <!-- قسم تفاصيل المسلسل -->
+        <div id="serie-details-container">
+            <button onclick="showMain()" class="main-btn" style="margin:1rem; border-radius:8px; padding: 12px 24px;">
+                ← العودة للقائمة الرئيسية
+            </button>
+            <div class="serie-details-card">
+                <div class="serie-details-header">
+                    <img id="serie-details-poster" class="serie-details-poster" src="" alt="">
+                    <div class="serie-details-info">
+                        <h2 id="serie-details-title" class="serie-details-title"></h2>
+                        <div class="serie-details-meta">
+                            <span id="serie-details-rating" class="serie-details-rating"></span>
+                            <span id="serie-details-type" class="serie-details-type"></span>
+                        </div>
+                        <div id="serie-details-description" class="serie-details-description"></div>
+                    </div>
+                </div>
+            </div>
+            <h3 style="margin: 1.5rem 0; color: #FFFFFF;">الحلقات</h3>
+            <div id="episodes-list"></div>
+        </div>
         
         <div id="episodes-container" style="display:none;">
            <button onclick="showMain()" class="main-btn" style="margin:1rem; border-radius:8px;">
@@ -565,7 +840,6 @@ body {
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                
                 <video id="videoElement" controls playsinline controlsList="nodownload"></video>
             </div>
         </div>
@@ -585,19 +859,22 @@ body {
         });
         
         navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
         });
-    });
+
         class SerieVerse {
             constructor() {
                 this.baseAPI = "https://cee.buzz/api/android";
                 this.serieData = [];
                 this.filteredSeries = [];
+                this.featuredSeries = [];
                 this.currentPage = 1;
                 this.itemsPerPage = 12;
                 this.totalPages = 1;
                 this.currentEpisodes = [];
+                this.currentSerieDetails = null;
                 this.searchTerm = '';
                 this.init();
             }
@@ -605,6 +882,7 @@ body {
             async init() {
                 await this.loadMainData();
                 this.setupEventListeners();
+                await this.loadFeaturedData();
             }
 
             async loadMainData(page = 0) {
@@ -612,6 +890,7 @@ body {
                 try {
                     const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/320/level/0/itemsPerPage/${this.itemsPerPage}/page/${page}`);
                     const data = await res.json();
+                   // console.log(data)
                     this.serieData = data.map(item => ({
                         id: item.nb,
                         title: item.ar_title,
@@ -620,7 +899,27 @@ body {
                         type: item.custom_ar_title
                     }));
                     this.filteredSeries = this.serieData;
-                    this.renderSeries();
+                    this.renderSeries2();
+                } catch (error) {
+                    this.showError('فشل تحميل البيانات');
+                } finally {
+                    this.hideLoader();
+                }
+            }
+
+            async loadFeaturedData(page = 0) {
+                this.showLoader();
+                try {
+                    const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/109/level/0/itemsPerPage/${this.itemsPerPage}/page/${page}`);
+                    const data = await res.json();
+                    this.featuredSeries = data.map(item => ({
+                        id: item.nb,
+                        title: item.ar_title,
+                        img: item.imgObjUrl,
+                        stars: item.stars,
+                        type: item.custom_ar_title
+                    }));
+                    this.renderSeries3();
                 } catch (error) {
                     this.showError('فشل تحميل البيانات');
                 } finally {
@@ -633,6 +932,7 @@ body {
                 try {
                     const res = await fetch(`${this.baseAPI}/AdvancedSearch?level=0&videoTitle=${encodeURIComponent(term)}&page=0&year=1900,2050&type=series`);
                     const data = await res.json();
+                    //console.log(data)
                     this.filteredSeries = data.map(item => ({
                         id: item.nb,
                         title: item.ar_title,
@@ -641,7 +941,7 @@ body {
                         type: item.custom_ar_title
                     }));
                     this.currentPage = 1;
-                    this.renderSeries();
+                    this.renderSearchResults();
                 } catch (error) {
                     this.showError('فشل في البحث');
                 } finally {
@@ -649,29 +949,58 @@ body {
                 }
             }
 
-            async loadEpisodes(serieId) {
+            async loadSerieDetails(serieId) {
                 this.showLoader();
                 try {
-                    const res = await fetch(`${this.baseAPI}/videoSeason/id/${serieId}`);
-                    if (!res.ok) throw new Error('فشل في جلب البيانات');
-                    const data = await res.json();
+                    // جلب تفاصيل المسلسل
+                    const detailsRes = await fetch(`https://cee.buzz/api/android/allVideoInfo/id/${serieId}`);
+                    if (!detailsRes.ok) throw new Error('فشل في جلب تفاصيل المسلسل');
+                    const detailsData = await detailsRes.json();
+                   // console.log(detailsData)
                     
-                    this.currentEpisodes = this.organizeEpisodes(data);
+                    // جلب الحلقات
+                    const episodesRes = await fetch(`${this.baseAPI}/videoSeason/id/${serieId}`);
+                    if (!episodesRes.ok) throw new Error('فشل في جلب الحلقات');
+                    const episodesData = await episodesRes.json();
+                    
+                    // تخزين البيانات
+                    this.currentSerieDetails = {
+                        id: detailsData.nb,
+                        title: detailsData.ar_title || detailsData.title,
+                        img: `https://cnth2.cee.buzz/vascin-poster-images/${detailsData.img}`,
+                        stars: detailsData.stars,
+                        mDate: detailsData.mDate,
+                        description: detailsData.ar_content || detailsData.en_content || 'لا يوجد وصف متاح'
+                    };
+                    
+                    this.currentEpisodes = this.organizeEpisodes(episodesData);
+                    
+                    // عرض التفاصيل والحلقات
+                    this.renderSerieDetails();
                     this.renderEpisodes();
                     
-                    document.getElementById('episodes-container').style.display = 'block';
+                    // إخفاء الأقسام الأخرى وإظهار قسم التفاصيل
+                    document.getElementById('serie-details-container').style.display = 'block';
                     document.getElementById('serie-container').style.display = 'none';
                     document.getElementById('pagination').style.display = 'none';
+                    document.getElementById('seer').style.display = 'none';
+                    document.getElementById('episodes-container').style.display = 'none';
                 } catch (error) {
-                    console.error('Error loading episodes:', error);
-                    alert('حدث خطأ في تحميل الحلقات');
+                    console.error('Error loading serie details:', error);
+                    alert('حدث خطأ في تحميل تفاصيل المسلسل');
                 } finally {
                     this.hideLoader();
                 }
             }
 
+            async loadEpisodes(serieId) {
+                // استخدام الدالة الجديدة لتحميل التفاصيل والحلقات
+                await this.loadSerieDetails(serieId);
+            }
+
             organizeEpisodes(data) {
                 const organized = {};
+                
                 data.forEach(ep => {
                     const season = ep.season || '1';
                     if (!organized[season]) organized[season] = [];
@@ -682,6 +1011,17 @@ body {
                     });
                 });
                 return organized;
+            }
+
+            renderSerieDetails() {
+                if (!this.currentSerieDetails) return;
+                
+                document.getElementById('serie-details-poster').src = this.currentSerieDetails.img;
+                document.getElementById('serie-details-poster').alt = this.currentSerieDetails.title;
+                document.getElementById('serie-details-title').textContent = this.currentSerieDetails.title;
+                document.getElementById('serie-details-rating').textContent = `★ ${this.currentSerieDetails.stars}`;
+                document.getElementById('serie-details-type').textContent = this.currentSerieDetails.mDate;
+                document.getElementById('serie-details-description').textContent = this.currentSerieDetails.description;
             }
 
             renderSeries() {
@@ -695,6 +1035,69 @@ body {
                             <div class="serie-meta">
                                 <span>${serie.type}</span>
                             </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.querySelectorAll('.serie-card').forEach(card => {
+                    card.addEventListener('click', () => this.loadEpisodes(card.dataset.id));
+                });
+            }
+
+            renderSearchResults() {
+                const container = document.getElementById('serie-container');
+                document.getElementById('seer').style.display = 'none';
+                container.className = 'category-result-container';
+                
+                container.innerHTML = this.filteredSeries.map(serie => `
+                    <div class="search-result-card" data-id="${serie.id}">
+                        <img src="${serie.img}" class="search-result-poster" alt="${serie.title}">
+                        <div class="search-result-info">
+                            <div>
+                                <h3 class="search-result-title">${serie.title}</h3>
+                                <div class="search-result-meta">
+                                    <span class="search-result-rating">★ ${serie.stars}</span>
+                                    <span>${serie.type}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.querySelectorAll('.search-result-card').forEach(card => {
+                    card.addEventListener('click', () => this.loadEpisodes(card.dataset.id));
+                });
+            }
+
+            renderSeries2() {
+                const container = document.getElementById('serie-container2');
+                const section = document.getElementById('section-title');
+                section.innerHTML = `${this.filteredSeries[0]?.type || 'المسلسلات المميزة'}`;
+                container.innerHTML = this.filteredSeries.map(serie => `
+                    <div class="serie-card" data-id="${serie.id}">
+                        <div class="rating-badge">★ ${serie.stars}</div>
+                        <img src="${serie.img}" class="serie-poster" alt="${serie.title}">
+                        <div class="serie-info">
+                            <h3 class="serie-title">${serie.title}</h3>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.querySelectorAll('.serie-card').forEach(card => {
+                    card.addEventListener('click', () => this.loadEpisodes(card.dataset.id));
+                });
+            }
+
+            renderSeries3() {
+                const container = document.getElementById('serie-container3');
+                const section3 = document.getElementById('section-title3');
+                section3.innerHTML = `${this.featuredSeries[0]?.type || 'المسلسلات الشائعة'}`;
+                container.innerHTML = this.featuredSeries.map(serie => `
+                    <div class="serie-card" data-id="${serie.id}">
+                        <div class="rating-badge">★ ${serie.stars}</div>
+                        <img src="${serie.img}" class="serie-poster" alt="${serie.title}">
+                        <div class="serie-info">
+                            <h3 class="serie-title">${serie.title}</h3>
                         </div>
                     </div>
                 `).join('');
@@ -751,12 +1154,10 @@ body {
                     const videoTran = await fetch(`${this.baseAPI}/translationFiles/id/${videoID}`);
                     const videoData = await videoTran.json();
                     
-                    // استخراج رابط الترجمة
                     let translationUrl = '';
                     if (videoData.arTranslationFilePath && videoData.arTranslationFilePath.includes('.srt')) {
                         translationUrl = videoData.arTranslationFilePath;
                     } else if (videoData.translations && videoData.translations.length > 0) {
-                        // البحث عن أول ترجمة عربية بصيغة .srt أو .vtt
                         const arabicTranslation = videoData.translations.find(trans => 
                             trans.type === 'ar' && (trans.extention === 'srt' || trans.extention === 'vtt')
                         );
@@ -806,32 +1207,24 @@ body {
             }
 
             displaySubtitles(subtitles) {
-    const video = document.getElementById('videoElement');
-    const subtitleContainer = document.createElement('div');
-    subtitleContainer.id = 'subtitle-container';
-    subtitleContainer.style.position = 'absolute';
-    subtitleContainer.style.bottom = '10%';
-    subtitleContainer.style.left = '50%';
-    subtitleContainer.style.transform = 'translateX(-50%)';
-    subtitleContainer.style.color = '#fff';
-    subtitleContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    subtitleContainer.style.padding = '0px 0px'; 
-    //subtitleContainer.style.borderRadius = '10px';
-    subtitleContainer.style.textAlign = 'center';
-    subtitleContainer.style.zIndex = '1000';
-    subtitleContainer.style.fontSize = '10px';
-    subtitleContainer.style.width = 'auto'; 
-    subtitleContainer.style.maxWidth = '80%'; 
-    //subtitleContainer.style.border = '1px solid #000000'; 
-    //subtitleContainer.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.5)'; 
-    document.querySelector('.video-player').appendChild(subtitleContainer);
+                const video = document.getElementById('videoElement');
+                
+                // إزالة حاوية الترجمة السابقة إن وجدت
+                const existingContainer = document.getElementById('subtitle-container');
+                if (existingContainer) {
+                    existingContainer.remove();
+                }
+                
+                const subtitleContainer = document.createElement('div');
+                subtitleContainer.id = 'subtitle-container';
+                document.querySelector('.video-player').appendChild(subtitleContainer);
 
-    video.addEventListener('timeupdate', () => {
-        const currentTime = video.currentTime * 1000;
-        const currentSubtitle = subtitles.find(sub => currentTime >= sub.startTime && currentTime <= sub.endTime);
-        subtitleContainer.textContent = currentSubtitle ? currentSubtitle.text.trim() : '';
-    });
-}
+                video.addEventListener('timeupdate', () => {
+                    const currentTime = video.currentTime * 1000;
+                    const currentSubtitle = subtitles.find(sub => currentTime >= sub.startTime && currentTime <= sub.endTime);
+                    subtitleContainer.textContent = currentSubtitle ? currentSubtitle.text.trim() : '';
+                });
+            }
 
             playVideo(url, videoID) {
                 const video = document.getElementById('videoElement');
@@ -847,8 +1240,10 @@ body {
                     this.searchTerm = e.target.value;
                     if (this.searchTerm.length > 2) {
                         this.searchSeries(this.searchTerm);
-                    } else {
-                        this.loadMainData();
+                    } else if (this.searchTerm.length === 0) {
+                        document.getElementById('serie-container').className = 'serie-grid';
+                        document.getElementById('seer').style.display = 'block';
+                        this.renderSeries();
                     }
                 });
 
@@ -876,6 +1271,12 @@ body {
         function closeVideo() {
             const video = document.getElementById('videoElement');
             const overlay = document.getElementById('videoOverlay');
+            const subtitleContainer = document.getElementById('subtitle-container');
+            
+            if (subtitleContainer) {
+                subtitleContainer.remove();
+            }
+            
             video.pause();
             video.src = '';
             overlay.style.display = 'none';
@@ -883,180 +1284,180 @@ body {
 
         function showMain() {
             document.getElementById('episodes-container').style.display = 'none';
+            document.getElementById('serie-details-container').style.display = 'none';
+            document.getElementById('serie-container').className = 'serie-grid';
             document.getElementById('serie-container').style.display = 'grid';
             document.getElementById('pagination').style.display = 'flex';
+            document.getElementById('seer').style.display = 'block';
         }
 
-        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             window.app = new SerieVerse();
         });
-        
-        
-        
-        
-        //#################
-        
-        
+
         class CategoriesHandler {
-    constructor() {
-        this.baseAPI = "https://cee.buzz/api/android";
-        this.dropdown = document.getElementById('categoryDropdown');
-        this.categoryBtn = document.getElementById('categoryBtn');
-        this.isOpen = false;
-        this.init();
-    }
-
-    init() {
-        // إعداد الأحداث
-        this.categoryBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleDropdown();
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!this.dropdown.contains(e.target) && !this.categoryBtn.contains(e.target)) {
-                this.closeDropdown();
+            constructor() {
+                this.baseAPI = "https://cee.buzz/api/android";
+                this.dropdown = document.getElementById('categoryDropdown');
+                this.categoryBtn = document.getElementById('categoryBtn');
+                this.isOpen = false;
+                this.init();
             }
-        });
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) this.closeDropdown();
-        });
+            init() {
+                this.categoryBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggleDropdown();
+                });
 
-        this.loadCategories();
-    }
+                document.addEventListener('click', (e) => {
+                    if (!this.dropdown.contains(e.target) && !this.categoryBtn.contains(e.target)) {
+                        this.closeDropdown();
+                    }
+                });
 
-    async loadCategories() {
-        try {
-            const loader = document.createElement('div');
-            loader.className = 'category-loading';
-            loader.textContent = 'جاري التحميل...';
-            this.dropdown.appendChild(loader);
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) this.closeDropdown();
+                });
 
-            const response = await fetch(`${this.baseAPI}/categoryLangFreqVideo`);
-            const categories = await response.json();
-            
-            this.dropdown.removeChild(loader);
-            this.renderCategories(categories);
-        } catch (error) {
-            console.error('فشل تحميل التصنيفات:', error);
-            this.showError('فشل تحميل التصنيفات');
-        }
-    }
-
-    renderCategories(categories) {
-        this.dropdown.innerHTML = ''; // مسح المحتوى القديم
-        
-        categories.forEach(category => {
-            const categoryItem = document.createElement('a');
-            categoryItem.href = '#';
-            categoryItem.className = 'category-item';
-            categoryItem.innerHTML = `
-                ${category.ar_title}
-            `;
-            
-            categoryItem.addEventListener('click', async (e) => {
-                e.preventDefault();
-                this.handleCategorySelection(category.nb, category.ar_title);
-                this.closeDropdown();
-            });
-
-            this.dropdown.appendChild(categoryItem);
-        });
-    }
-
-    async handleCategorySelection(categoryId, categoryName) {
-        try {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-
-            const params = new URLSearchParams({
-                categoryID: categoryId,
-                orderby: 'desc',
-                videoKind: '2',
-                offset: '0',
-                level: '0'
-            });
-            navLinks.classList.remove('active');
-
-            const response = await fetch(`${this.baseAPI}/videosByCategory?${params}`);
-            const data = await response.json();
-            
-            if (data.info && data.info.length > 0) {
-                this.displayCategoryResults(data.info, categoryName);
-            } else {
-                this.showError('لا توجد نتائج لهذا التصنيف');
+                this.loadCategories();
             }
-        } catch (error) {
-            console.error('خطأ في جلب البيانات:', error);
-            this.showError('فشل تحميل البيانات');
-        } finally {
-            document.getElementById('loader').style.display = 'none';
-        }
-    }
 
-    displayCategoryResults(results, categoryName) {
-        const container = document.getElementById('serie-container');
-        const pagination = document.getElementById('pagination');
-        
-        // تحديث العنوان
-        document.querySelector('.search-section').insertAdjacentHTML('beforebegin', 
-            `<h2 class="category-title">التصنيف: ${categoryName}</h2>`
-        );
+            async loadCategories() {
+                try {
+                    const loader = document.createElement('div');
+                    loader.className = 'category-loading';
+                    loader.textContent = 'جاري التحميل...';
+                    this.dropdown.appendChild(loader);
 
-        // عرض النتائج
-        container.innerHTML = results.map(item => `
-            <div class="serie-card" data-id="${item.nb}">
-                <div class="rating-badge">★ ${item.stars}</div>
-                <img src="${item.imgObjUrl}" class="serie-poster" alt="${item.ar_title}">
-                <div class="serie-info">
-                    <h3 class="serie-title">${item.ar_title}</h3>
-                    <div class="serie-meta">
-                        <span>${item.mDate}</span>
+                    const response = await fetch(`${this.baseAPI}/categoryLangFreqVideo`);
+                    const categories = await response.json();
+                    
+                    this.dropdown.removeChild(loader);
+                    this.renderCategories(categories);
+                } catch (error) {
+                    console.error('فشل تحميل التصنيفات:', error);
+                    this.showError('فشل تحميل التصنيفات');
+                }
+            }
+
+            renderCategories(categories) {
+                this.dropdown.innerHTML = '';
+                
+                categories.forEach(category => {
+                    const categoryItem = document.createElement('a');
+                    categoryItem.href = '#';
+                    categoryItem.className = 'category-item';
+                    categoryItem.innerHTML = `
+                        ${category.ar_title}
+                    `;
+                    
+                    categoryItem.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        this.handleCategorySelection(category.nb, category.ar_title);
+                        this.closeDropdown();
+                    });
+
+                    this.dropdown.appendChild(categoryItem);
+                });
+            }
+
+            async handleCategorySelection(categoryId, categoryName) {
+                try {
+                    const loader = document.getElementById('loader');
+                    loader.style.display = 'block';
+
+                    const params = new URLSearchParams({
+                        categoryID: categoryId,
+                        orderby: 'desc',
+                        videoKind: '2',
+                        offset: '0',
+                        level: '0'
+                    });
+                    navLinks.classList.remove('active');
+
+                    const response = await fetch(`${this.baseAPI}/videosByCategory?${params}`);
+                    const data = await response.json();
+                    
+                    if (data.info && data.info.length > 0) {
+                        this.displayCategoryResults(data.info, categoryName);
+                    } else {
+                        this.showError('لا توجد نتائج لهذا التصنيف');
+                    }
+                } catch (error) {
+                    console.error('خطأ في جلب البيانات:', error);
+                    this.showError('فشل تحميل البيانات');
+                } finally {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            }
+
+            displayCategoryResults(results, categoryName) {
+                const container = document.getElementById('serie-container');
+                const pagination = document.getElementById('pagination');
+                document.getElementById('seer').style.display = 'none';
+                
+                // إزالة العنوان السابق إذا وجد
+                const existingTitle = document.querySelector('.category-title');
+                if (existingTitle) {
+                    existingTitle.remove();
+                }
+                
+                document.querySelector('.search-section').insertAdjacentHTML('beforebegin', 
+                    `<h2 class="category-title">التصنيف: ${categoryName}</h2>`
+                );
+
+                container.className = 'category-result-container';
+                container.innerHTML = results.map(item => `
+                    <div class="search-result-card" data-id="${item.nb}">
+                        <img src="${item.imgObjUrl}" class="search-result-poster" alt="${item.ar_title}">
+                        <div class="search-result-info">
+                            <div>
+                                <h3 class="search-result-title">${item.ar_title}</h3>
+                                <div class="search-result-meta">
+                                    <span class="search-result-rating">★ ${item.stars}</span>
+                                    <span>${item.mDate}</span>
+                                </div>
+                                <div class="search-result-meta">
+                                    <span>${categoryName}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="serie-meta">
-                        <span>${categoryName}</span>
                     </div>
-                </div>
-            </div>
-        `).join('');
+                `).join('');
 
-        // إخفاء الترقيم
-        pagination.style.display = 'none';
-        
-        // إضافة أحداث النقر على البطاقات
-        document.querySelectorAll('.serie-card').forEach(card => {
-            card.addEventListener('click', () => window.app.loadEpisodes(card.dataset.id));
+                pagination.style.display = 'none';
+                
+                document.querySelectorAll('.search-result-card').forEach(card => {
+                    card.addEventListener('click', () => window.app.loadEpisodes(card.dataset.id));
+                });
+            }
+
+            toggleDropdown() {
+                this.isOpen = !this.isOpen;
+                this.dropdown.classList.toggle('show', this.isOpen);
+                this.categoryBtn.innerHTML = this.isOpen ? 
+                    'التصنيفات ▲' : 
+                    'التصنيفات ▼';
+            }
+
+            closeDropdown() {
+                this.isOpen = false;
+                this.dropdown.classList.remove('show');
+                this.categoryBtn.innerHTML = 'التصنيفات ▼';
+            }
+
+            showError(message) {
+                const errorEl = document.createElement('div');
+                errorEl.className = 'category-error';
+                errorEl.textContent = message;
+                this.dropdown.appendChild(errorEl);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoriesHandler = new CategoriesHandler();
         });
-    }
-
-    toggleDropdown() {
-        this.isOpen = !this.isOpen;
-        this.dropdown.classList.toggle('show', this.isOpen);
-        this.categoryBtn.innerHTML = this.isOpen ? 
-            'التصنيفات ▲' : 
-            'التصنيفات ▼';
-    }
-
-    closeDropdown() {
-        this.isOpen = false;
-        this.dropdown.classList.remove('show');
-        this.categoryBtn.innerHTML = 'التصنيفات ▼';
-    }
-
-    showError(message) {
-        const errorEl = document.createElement('div');
-        errorEl.className = 'category-error';
-        errorEl.textContent = message;
-        this.dropdown.appendChild(errorEl);
-    }
-}
-
-// التهيئة بعد تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-    const categoriesHandler = new CategoriesHandler();
-});
     </script>
 </body>
-    </html>
+</html>
