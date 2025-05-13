@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-    	
 :root {
     --primary-color: #342B27;
     --secondary-color: #B73C31;
@@ -752,6 +751,37 @@ body {
     padding: 15px;
     text-align: center;
     color: #888;
+}    	
+.load-more-btn {
+    background: #2c3e50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    margin: 20px auto;
+    display: block;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+}
+
+.load-more-btn:hover {
+    background: #34495e;
+    transform: translateY(-2px);
+}
+
+/* تنسيق القوائم الأفقية */
+.horizontal-scroll {
+    position: relative;
+    padding: 20px 0;
+}
+
+.horizontal-section {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 0;
+    scrollbar-width: thin;
 }
     </style>
 </head>
@@ -790,15 +820,18 @@ body {
             </div>
         </div>
         <div id="seer">
-        <div class="horizontal-scroll" id="trending-section">
-            <h2 class="section-title" id ="section-title"></h2>
-            <div class="horizontal-section" id="serie-container2"></div>
-        </div>
+            <div class="horizontal-scroll" id="trending-section">
+                <h2 class="section-title" id="section-title">المسلسلات الشائعة</h2>
+                <div class="horizontal-section" id="serie-container2"></div>
+                <button class="load-more-btn" data-section="main">عرض المزيد</button>
+            </div>
 
-        <div class="horizontal-scroll" id="featured-section">
-            <h2 class="section-title" id ="section-title3"></h2>
-            <div class="horizontal-section" id="serie-container3"></div>
-        </div></div>
+            <div class="horizontal-scroll" id="featured-section">
+                <h2 class="section-title" id="section-title3">المسلسلات المميزة</h2>
+                <div class="horizontal-section" id="serie-container3"></div>
+                <button class="load-more-btn" data-section="featured">عرض المزيد</button>
+            </div>
+        </div>
 
         <div class="loader" id="loader"></div>
         <div id="serie-container" class="serie-grid"></div>
@@ -870,7 +903,9 @@ body {
                 this.serieData = [];
                 this.filteredSeries = [];
                 this.featuredSeries = [];
-                this.currentPage = 1;
+                this.currentMainPage = 0;
+                this.currentFeaturedPage = 0;
+                this.currentCategoryPages = new Map();
                 this.itemsPerPage = 12;
                 this.totalPages = 1;
                 this.currentEpisodes = [];
@@ -881,24 +916,26 @@ body {
 
             async init() {
                 await this.loadMainData();
-                this.setupEventListeners();
                 await this.loadFeaturedData();
+                this.setupEventListeners();
             }
 
-            async loadMainData(page = 0) {
+            async loadMainData() {
                 this.showLoader();
                 try {
-                    const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/320/level/0/itemsPerPage/${this.itemsPerPage}/page/${page}`);
+                    const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/311/level/0/itemsPerPage/${this.itemsPerPage}/page/${this.currentMainPage}`);
                     const data = await res.json();
-                   // console.log(data)
-                    this.serieData = data.map(item => ({
+                    
+                    const newData = data.map(item => ({
                         id: item.nb,
                         title: item.ar_title,
                         img: item.imgObjUrl,
                         stars: item.stars,
                         type: item.custom_ar_title
                     }));
-                    this.filteredSeries = this.serieData;
+                    
+                    this.serieData = [...this.serieData, ...newData];
+                    this.currentMainPage++;
                     this.renderSeries2();
                 } catch (error) {
                     this.showError('فشل تحميل البيانات');
@@ -907,18 +944,22 @@ body {
                 }
             }
 
-            async loadFeaturedData(page = 0) {
+            async loadFeaturedData() {
                 this.showLoader();
                 try {
-                    const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/109/level/0/itemsPerPage/${this.itemsPerPage}/page/${page}`);
+                    const res = await fetch(`${this.baseAPI}/videoListPagination/groupID/109/level/0/itemsPerPage/${this.itemsPerPage}/page/${this.currentFeaturedPage}`);
                     const data = await res.json();
-                    this.featuredSeries = data.map(item => ({
+                    
+                    const newData = data.map(item => ({
                         id: item.nb,
                         title: item.ar_title,
                         img: item.imgObjUrl,
                         stars: item.stars,
                         type: item.custom_ar_title
                     }));
+                    
+                    this.featuredSeries = [...this.featuredSeries, ...newData];
+                    this.currentFeaturedPage++;
                     this.renderSeries3();
                 } catch (error) {
                     this.showError('فشل تحميل البيانات');
@@ -932,7 +973,7 @@ body {
                 try {
                     const res = await fetch(`${this.baseAPI}/AdvancedSearch?level=0&videoTitle=${encodeURIComponent(term)}&page=0&year=1900,2050&type=series`);
                     const data = await res.json();
-                    //console.log(data)
+                    
                     this.filteredSeries = data.map(item => ({
                         id: item.nb,
                         title: item.ar_title,
@@ -956,7 +997,6 @@ body {
                     const detailsRes = await fetch(`https://cee.buzz/api/android/allVideoInfo/id/${serieId}`);
                     if (!detailsRes.ok) throw new Error('فشل في جلب تفاصيل المسلسل');
                     const detailsData = await detailsRes.json();
-                   // console.log(detailsData)
                     
                     // جلب الحلقات
                     const episodesRes = await fetch(`${this.baseAPI}/videoSeason/id/${serieId}`);
@@ -994,7 +1034,6 @@ body {
             }
 
             async loadEpisodes(serieId) {
-                // استخدام الدالة الجديدة لتحميل التفاصيل والحلقات
                 await this.loadSerieDetails(serieId);
             }
 
@@ -1072,8 +1111,8 @@ body {
             renderSeries2() {
                 const container = document.getElementById('serie-container2');
                 const section = document.getElementById('section-title');
-                section.innerHTML = `${this.filteredSeries[0]?.type || 'المسلسلات المميزة'}`;
-                container.innerHTML = this.filteredSeries.map(serie => `
+                section.innerHTML = `${this.serieData[0]?.type || 'المسلسلات الشائعة'}`;
+                container.innerHTML = this.serieData.map(serie => `
                     <div class="serie-card" data-id="${serie.id}">
                         <div class="rating-badge">★ ${serie.stars}</div>
                         <img src="${serie.img}" class="serie-poster" alt="${serie.title}">
@@ -1091,7 +1130,7 @@ body {
             renderSeries3() {
                 const container = document.getElementById('serie-container3');
                 const section3 = document.getElementById('section-title3');
-                section3.innerHTML = `${this.featuredSeries[0]?.type || 'المسلسلات الشائعة'}`;
+                section3.innerHTML = `${this.featuredSeries[0]?.type || 'المسلسلات المميزة'}`;
                 container.innerHTML = this.featuredSeries.map(serie => `
                     <div class="serie-card" data-id="${serie.id}">
                         <div class="rating-badge">★ ${serie.stars}</div>
@@ -1252,6 +1291,17 @@ body {
                         this.searchSeries(this.searchTerm);
                     }
                 });
+
+                document.querySelectorAll('.load-more-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const section = e.target.dataset.section;
+                        if (section === 'main') {
+                            await this.loadMainData();
+                        } else if (section === 'featured') {
+                            await this.loadFeaturedData();
+                        }
+                    });
+                });
             }
 
             showLoader() {
@@ -1301,6 +1351,7 @@ body {
                 this.dropdown = document.getElementById('categoryDropdown');
                 this.categoryBtn = document.getElementById('categoryBtn');
                 this.isOpen = false;
+                this.currentCategoryPages = new Map();
                 this.init();
             }
 
@@ -1367,11 +1418,12 @@ body {
                     const loader = document.getElementById('loader');
                     loader.style.display = 'block';
 
+                    let currentPage = this.currentCategoryPages.get(categoryId) || 0;
                     const params = new URLSearchParams({
                         categoryID: categoryId,
                         orderby: 'desc',
                         videoKind: '2',
-                        offset: '0',
+                        offset: currentPage * 20,
                         level: '0'
                     });
                     navLinks.classList.remove('active');
@@ -1380,7 +1432,8 @@ body {
                     const data = await response.json();
                     
                     if (data.info && data.info.length > 0) {
-                        this.displayCategoryResults(data.info, categoryName);
+                        this.displayCategoryResults(data.info, categoryName, categoryId);
+                        this.currentCategoryPages.set(categoryId, currentPage + 1);
                     } else {
                         this.showError('لا توجد نتائج لهذا التصنيف');
                     }
@@ -1392,7 +1445,7 @@ body {
                 }
             }
 
-            displayCategoryResults(results, categoryName) {
+            displayCategoryResults(results, categoryName, categoryId) {
                 const container = document.getElementById('serie-container');
                 const pagination = document.getElementById('pagination');
                 document.getElementById('seer').style.display = 'none';
@@ -1403,12 +1456,20 @@ body {
                     existingTitle.remove();
                 }
                 
+                // إزالة زر العرض السابق إذا وجد
+                const existingLoadMore = document.querySelector(`.load-more-btn[data-category="${categoryId}"]`);
+                if (existingLoadMore) {
+                    existingLoadMore.remove();
+                }
+
                 document.querySelector('.search-section').insertAdjacentHTML('beforebegin', 
                     `<h2 class="category-title">التصنيف: ${categoryName}</h2>`
                 );
 
                 container.className = 'category-result-container';
-                container.innerHTML = results.map(item => `
+                
+                // إلحاق النتائج الجديدة بدلاً من استبدالها
+                const newContent = results.map(item => `
                     <div class="search-result-card" data-id="${item.nb}">
                         <img src="${item.imgObjUrl}" class="search-result-poster" alt="${item.ar_title}">
                         <div class="search-result-info">
@@ -1426,7 +1487,21 @@ body {
                     </div>
                 `).join('');
 
+                if (this.currentCategoryPages.get(categoryId) > 0) {
+                    container.innerHTML += newContent;
+                } else {
+                    container.innerHTML = newContent;
+                }
+
                 pagination.style.display = 'none';
+                
+                // إضافة زر عرض المزيد
+                const loadMoreBtn = document.createElement('button');
+                loadMoreBtn.className = 'load-more-btn';
+                loadMoreBtn.textContent = 'عرض المزيد';
+                loadMoreBtn.dataset.category = categoryId;
+                loadMoreBtn.onclick = () => this.handleCategorySelection(categoryId, categoryName);
+                container.appendChild(loadMoreBtn);
                 
                 document.querySelectorAll('.search-result-card').forEach(card => {
                     card.addEventListener('click', () => window.app.loadEpisodes(card.dataset.id));
